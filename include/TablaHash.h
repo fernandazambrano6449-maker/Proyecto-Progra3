@@ -20,11 +20,22 @@ struct Casilla { //creacion de una casilla. Cada casilla guarda un dato(un regis
 class TablaHash { //clase
 private: //datos internos para proteger
     Casilla* casillas; //puntero
-    int capacidad;
+    int capacidad; //cuantas casillaas tiene la tabla 
+    int contador; //saber cuantos registros estan guardados en la tabla
+    int eliminadas; //variable para contar cuantas casillas estan marcadas como eliminadas
+    void rehash();
+    bool esPrimo(int); //comprobar si un numero es primo
+    int siguientePrimo(int); //encontrar una capacidad adecuada 
+    void verificarCarga(); //revisa si se alcanzo el limite y si hay que llamara rehash
+
+
 public: //funciones que se pueden usar desde fuera
 TablaHash();~TablaHash();
-    bool insertar(const Registro& r); //recibe un registro llamado r 
-
+    bool insertar(const Registro& r); //recibe un registro llamado r
+    bool buscar(int id, Registro& resultado) const; //recibe el id que se busca y guarda el registro encontrado en resultado 
+    bool eliminar(int id);
+    bool actualizar(int id, int nuevoValor);
+    bool verificarTablahash();
 };
 
 

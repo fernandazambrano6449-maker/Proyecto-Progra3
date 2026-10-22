@@ -4,15 +4,17 @@
 #include "Motor.h"
 
 #include <cstring>
-
+#include <cstdio>
 Motor::Motor() {}
 Motor::~Motor() {}
 
-bool Motor::insertar(const Registro& r) { (void)r; return false; }
-bool Motor::eliminar(int id) { (void)id; return false; }
-bool Motor::actualizar(int id, int nuevoValor) { (void)id; (void)nuevoValor; return false; }
+bool Motor::insertar(const Registro& r) {return tabla.insertar(r);}
 
-bool Motor::obtener(int id, Registro& salida) { (void)id; (void)salida; return false; }
+bool Motor::eliminar(int id) { return tabla.eliminar(id);}
+
+bool Motor::actualizar(int id, int nuevoValor) { return tabla.actualizar(id, nuevoValor); }
+
+bool Motor::obtener(int id, Registro& salida) {return tabla.buscar(id, salida);}
 
 void Motor::rango(int a, int b, int limite, ResultadoRango& salida) {
     (void)a; (void)b; (void)limite;
@@ -40,6 +42,12 @@ EstadisticasCache Motor::estadisticasCache() const {
 
 bool Motor::verificar(char* mensaje, int capacidad) {
     if (capacidad > 0) mensaje[0] = '\0';
+    if (!tabla.verificarTablahash()) {
+        if (capacidad > 0) {
+            std::snprintf(mensaje, capacidad, "Error en tabla hash");
+        }
+        return false;
+    }
     return true;
 }
 

@@ -13,10 +13,10 @@
 // =============================================================================
 #ifndef MOTOR_H
 #define MOTOR_H
-
+#include "Registro.h"
 #include <iostream>
 
-#include "Registro.h"
+#include "TablaHash.h"
 
 class Motor {
 public:
@@ -26,7 +26,7 @@ public:
     Motor& operator=(const Motor&) = delete;
 
     // --- Escrituras (false = error; no modifican nada si fallan) ------------
-    bool insertar(const Registro& r);           // false si el id ya existe
+    bool insertar(const Registro& r);
     bool eliminar(int id);                      // false si el id no existe
     bool actualizar(int id, int nuevoValor);    // false si el id no existe
 
@@ -57,7 +57,8 @@ public:
     void imprimirStats(std::ostream& os);
 
 private:
-    // TODO: tus estructuras
+    TablaHash tabla;
+
 };
 
 #endif
